@@ -21,3 +21,24 @@ Chaque étudiant est défini par:
 
 
 ### Enoncé 
+### entité Student
+````java
+@Data
+@Entity
+public class Student {
+    
+    // TODO: validations
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    private String firstName;
+    private String lastName;
+    private String email;
+  @Temporal(TemporalType.DATE)
+    private Date birth;
+    private GENDER gender;
+    private boolean inRule; // an règle
+
+}
+````
+
