@@ -14,7 +14,7 @@ public interface StudentService {
     Student saveNewStudent(Student student);
     Page<Student> getStudentsList(String keyword, int page, int pageSize);
     Student getStudentById(long id);
-    Student deleteStudent(long id);
+    void deleteStudent(long id);
     Student updateStudent(long id, Student student);
 
 

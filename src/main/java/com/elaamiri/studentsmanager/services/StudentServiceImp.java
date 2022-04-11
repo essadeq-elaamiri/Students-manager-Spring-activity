@@ -6,11 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @Data
@@ -20,7 +16,7 @@ public class StudentServiceImp implements StudentService{
 
     @Override
     public Student saveNewStudent(Student student) {
-        if(student == null) throw  new RuntimeException("Student object is null!");
+        if(student == null) throw  new RuntimeException("Invalid Student object (null)!");
         return studentRepository.save(student);
     }
 
@@ -34,16 +30,18 @@ public class StudentServiceImp implements StudentService{
 
     @Override
     public Student getStudentById(long id) {
-        return null;
+        return studentRepository.getById(id);
     }
 
     @Override
-    public Student deleteStudent(long id) {
-        return null;
+    public void deleteStudent(long id) {
+         studentRepository.deleteById(id);
     }
 
     @Override
     public Student updateStudent(long id, Student student) {
-        return null;
+        Student student1 = this.getStudentById(id);
+        if(student1 == null) throw new RuntimeException("Student does not exist !");
+        return saveNewStudent(student);
     }
 }
