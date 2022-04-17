@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @Data
 @AllArgsConstructor
@@ -25,23 +27,29 @@ public class StudentServiceImp implements StudentService{
     public Page<Student> getStudentsList( String keyword, int pageNumber, int pageSize) {
         if(keyword == null || keyword.equals(""))
             return studentRepository.findAll(PageRequest.of(pageNumber, pageSize));
-        return studentRepository.findStudentsByLastNameContainsOrFirstNameContains(keyword, PageRequest.of(pageNumber, pageSize));
+        return studentRepository.findStudentsByLastNameContainsOrFirstNameContains(keyword, keyword, PageRequest.of(pageNumber, pageSize));
     }
 
     @Override
-    public Student getStudentById(long id) {
-        return studentRepository.getById(id);
+    public Optional<Student> getStudentById(long id) {
+
+        return Optional.of(studentRepository.getById(id));
     }
 
     @Override
     public void deleteStudent(long id) {
-         studentRepository.deleteById(id);
+        Optional<Student> student = getStudentById(id);
+        if(student.isPresent())
+            studentRepository.deleteById(id);
+        else
+            throw new RuntimeException("Can not perform action, student does not exist!");
     }
 
     @Override
     public Student updateStudent(long id, Student student) {
-        Student student1 = this.getStudentById(id);
-        if(student1 == null) throw new RuntimeException("Student does not exist !");
+        Optional<Student> student1 = getStudentById(id);
+        if(student1.isEmpty())
+            throw new RuntimeException("Can not perform action, student does not exist!");
         return saveNewStudent(student);
     }
 }

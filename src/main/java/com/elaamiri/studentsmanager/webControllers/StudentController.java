@@ -17,4 +17,8 @@ public class StudentController {
     public String showHomePage(){
         return "homePage";
     }
+    @GetMapping("/")
+    public String handleRootPath(){
+        return "redirect:/home";
+    }
 }
