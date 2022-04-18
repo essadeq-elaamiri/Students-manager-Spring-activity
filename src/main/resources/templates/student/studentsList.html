@@ -3,6 +3,7 @@
 
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 
 >
 
@@ -25,7 +26,7 @@
 
         </div>
         <div class="list-group list-group-flush my-3">
-            <a href="#" class="list-group-item list-group-item-action bg-transparent second-text active"><i
+            <a href="@{/user/students}" class="list-group-item list-group-item-action bg-transparent second-text active"><i
                     class="fas fa-user-graduate me-2"></i>Students</a>
             <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
                 <i class="fas  fa-chalkboard-teacher me-2"></i>Teachers</a>
@@ -34,7 +35,7 @@
             <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                     class="fas fa-paperclip me-2"></i>Reports</a>
 
-            <a href="#" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold"><i
+            <a th:href="@{/logout}" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold"><i
                     class="fas fa-power-off me-2"></i>Logout</a>
         </div>
     </div>
@@ -58,13 +59,14 @@
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle second-text fw-bold" href="#" id="navbarDropdown"
-                           role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                           role="button" data-bs-toggle="dropdown" aria-expanded="false"
+                           sec:authentication="name">
                             <i class="fas fa-user me-2"></i>
-                            [Username]
+
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="#">Settings</a></li>
-                            <li><a class="dropdown-item" href="#">Logout</a></li>
+                            <li><a class="dropdown-item"  th:href="@{/logout}">Logout</a></li>
                         </ul>
                     </li>
                 </ul>
