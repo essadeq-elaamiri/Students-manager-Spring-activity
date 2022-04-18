@@ -1,10 +1,111 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="mainTemplate"
+>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Add new student</title>
+
+
 </head>
 <body>
+<div class="container card pb-4 mb-5 " layout:fragment="mainFrag">
+    <h1 class="mt-4 mb-5 text-center">Add a new student</h1>
+    <div class="row">
+        <div class="col-6 offset-3">
+            <form th:action="@{/admin/saveNewStudent}" th:object="${studentObject}" method="POST" action="#">
+                <div class="mb-3">
+                    <label for="firstName" class="form-label">First name</label>
+                    <input type="text"
+                           name="firstName"
+                           class="form-control"
+                           id="firstName"
+                           th:field="*{firstName}"
+                           th:value="${studentObject.firstName}">
+                    <span  class="text-danger" th:errors="${studentObject.firstName}"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="lastName" class="form-label">Last name</label>
+                    <input type="text"
+                           name="lastName"
+                           class="form-control"
+                           id="lastName"
+                           th:field="*{lastName}"
+                           th:value="${studentObject.lastName}">
+                    <span class="text-danger " th:errors="${studentObject.lastName}"></span>
 
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <input type="email"
+                           name="email"
+                           class="form-control"
+                           id="email"
+                           aria-describedby="emailHelp"
+                           th:field="*{email}"
+                           th:value="${studentObject.email}">
+                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                    <span class="text-danger " th:errors="${studentObject.email}"></span>
+
+
+                </div>
+                <div class="mb-3">
+                    <label for="birth" class="form-label">Birth date</label>
+                    <input type="date"
+                           name="birthDate"
+                           class="form-control"
+                           id="birth"
+                           th:field="*{birth}"
+                           th:value="${studentObject.birth}"
+                    >
+                    <span class="text-danger " th:errors="${studentObject.birth}"></span>
+
+                </div>
+
+                <div class="mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio"
+                               name="gender" id="gender1"
+                               th:field="*{gender}"
+                                value="MALE"
+                               checked >
+                        <label class="form-check-label" for="gender1">
+                            Male
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="gender"
+                               id="gender2" th:field="*{gender}" value="FEMALE">
+                        <label class="form-check-label" for="gender2">
+                            Female
+                        </label>
+                    </div>
+
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox"
+                           id="inrule" name="inRule"
+                           th:field="*{inRule}"
+                           th:value="${studentObject.inRule}"
+                    >
+                    <label class="form-check-label" for="inrule">
+                        is in rule ?
+                    </label>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <button type="submit" class="btn btn-dark text-light btn-sm text-uppercase"><i class="fas fa-check"></i> save</button>
+                    </div>
+                    <div class="col d-flex flex-row-reverse">
+                        <a th:href="@{/user/students}" class="btn btn-outline-warning text-dark btn-sm text-uppercase"><i class="fa-solid fa-arrow-left-long"></i> To the list</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>
