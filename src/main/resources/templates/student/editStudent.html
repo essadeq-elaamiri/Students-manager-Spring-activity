@@ -15,6 +15,13 @@
     <div class="row">
         <div class="col-6 offset-3">
             <form th:action="@{/admin/saveEditedStudent}" th:object="${studentObject}" method="POST" action="#">
+                <input type="text"
+                       name="id"
+                       class="form-control"
+                       id="id"
+                       th:field="*{id}"
+                       th:value="${studentObject.id}" disabled>
+
                 <div class="mb-3">
                     <label for="firstName" class="form-label">First name</label>
                     <input type="text"

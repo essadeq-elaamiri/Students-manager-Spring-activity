@@ -7,8 +7,10 @@ import lombok.Data;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
@@ -97,14 +99,15 @@ public class StudentController {
 
     @PostMapping("/admin/saveNewStudent") // hey you! if a post request this url, call the folloming function
     public String
-    saveNewStudent(@ModelAttribute("studentObject")  Student student,
+    saveNewStudent(@ModelAttribute("studentObject") @Valid Student student,
+                   BindingResult bindingResult,
                    @RequestParam(name = "gender")String gender,
                    @RequestParam(name = "page", defaultValue = "0") int page,
                    @RequestParam(name = "size", defaultValue = "5") int size,
                    @RequestParam(name = "searchKeyWord", defaultValue = "")
                            String searchKeyWord
     ){
-        return saveStudent(student, page, size, searchKeyWord);
+        return saveStudent(student, bindingResult ,page, size, searchKeyWord, "student/addNewStudent");
     }
 
 
@@ -131,36 +134,39 @@ public class StudentController {
 
     //saveEditedStudent
     @PostMapping("/admin/saveEditedStudent")
-    public String saveEditedStudent(@ModelAttribute("studentObject")  Student student,
+    public String saveEditedStudent(@ModelAttribute("studentObject") @Valid Student student,
+                                    BindingResult bindingResult,
                                     @RequestParam(name = "page", defaultValue = "0") int page,
                                     @RequestParam(name = "size", defaultValue = "5") int size,
                                     @RequestParam(name = "searchKeyWord", defaultValue = "")
                                             String searchKeyWord){
 
-        return saveStudent(student, page, size, searchKeyWord);
+        return saveStudent(student, bindingResult,page, size, searchKeyWord, "student/editStudent");
     }
 
-    private String saveStudent(Student student,int page,int size,String searchKeyWord) {
-        /*
-        // TODO: tests
+    private String saveStudent(Student student, BindingResult bindingResult,int page,int size,String searchKeyWord, String ifErrorRedirectTo) {
+
+
         if (bindingResult.hasErrors()) {
             /*for (ObjectError err :bindingResult.getAllErrors()){
                 System.out.println(err);
 
-            }
-            return ifValidationErrorRedirectTo; // redirect to form to show errors
+            }*/
+            return ifErrorRedirectTo; // redirect to form to show errors
         } else {
-            StudentService.insertStudent(Student);
+            studentService.saveNewStudent(student);
             // send a success message
             //model.addAttribute("StudentSuccessInsertionMsg", "Student inserted successfully");
-            return "redirect:/Students?page=" + page + "&size=" + size + "&searchKeyWord=" + searchKeyWord;
+            return "redirect:/user/students?page=" + page + "&size=" + size + "&searchKeyWord=" + searchKeyWord;
         }
-        */
 
+        /*
         studentService.saveNewStudent(student);
         // send a success message
         //model.addAttribute("StudentSuccessInsertionMsg", "Student inserted successfully");
         return "redirect:/user/students?page=" + page + "&size=" + size + "&searchKeyWord=" + searchKeyWord;
+
+         */
     }
 
 
