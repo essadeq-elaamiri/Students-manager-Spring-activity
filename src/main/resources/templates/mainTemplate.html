@@ -52,8 +52,9 @@
                        aria-haspopup="true" aria-expanded="false"
 
                     >
-                        <i class="fas fa-lock"></i>
-                        <i class="fas fa-user"></i>
+                        <i sec:authorize="isAnonymous()" class="fas fa-lock"></i>
+                        <i sec:authorize="isAuthenticated()"  class="fas fa-user"></i>
+                        <span sec:authentication="name"></span>
 
                     </a>
                     <div class="dropdown-menu">

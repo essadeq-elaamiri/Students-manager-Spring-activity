@@ -28,13 +28,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/resources/**" ,"/home", "/").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
+                //.antMatchers("/admin/**").hasAuthority("ADMIN") // for userDetailsInfo
                 .antMatchers("/user/**").hasRole("USER")
+                //.antMatchers("/user/**").hasAuthority("USER")
                 .anyRequest().authenticated(); // PROBLEM SOLVED :
         // it must be a children under the same  authorizeRequests()
         // order matters
         // allowing static resources by configure(WebSecurity web)
         //.formLogin();
-
 
 
 
@@ -48,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //http.formLogin().loginPage("/login"); // my own login form
 
         // configure errors (/error403 is a vue)
-        http.exceptionHandling().accessDeniedPage("/error403");
+        //http.exceptionHandling().accessDeniedPage("/error403");
 
 
     }

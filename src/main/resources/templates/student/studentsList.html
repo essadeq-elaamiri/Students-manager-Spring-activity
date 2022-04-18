@@ -132,7 +132,7 @@
             </div>
 
             <div class="row my-3">
-                <a th:href="@{/admin/showAddStudent}" class="btn btn-primary btn-sm text-uppercase my-2">add new student</a>
+                <a th:href="@{/admin/showAddStudent}" sec:authorize="hasAnyRole('ADMIN')" class="btn btn-primary btn-sm text-uppercase my-2">add new student</a>
 
                 </div>
 
@@ -188,7 +188,7 @@
                                     <th scope="col">Birth</th>
                                     <th scope="col">Gender</th>
                                     <th scope="col">InRule?</th>
-                                    <th scope="col">Actions</th>
+                                    <th sec:authorize="hasAnyRole('ADMIN')" scope="col">Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -200,7 +200,7 @@
                                     <td th:text="${student.getBirth()}"></td>
                                     <td th:text="${student.getGender()}"></td>
                                     <td th:text="${student.isInRule()? 'Yes' : 'No'}"></td>
-                                    <td >
+                                    <td sec:authorize="hasAnyRole('ADMIN')">
                                         <a th:href="@{/admin/showEditStudent/{id}(id=${student.getId()},page= ${currentPage}, searchKeyWord=${searchKeyWord})}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
                                         <button  class="btn btn-sm btn-danger deleteStudentBtn" th:attr="data-deleteLink = ${'/admin/deleteStudent/'+student.getId()+'?page='+currentPage+'&searchKeyWord='+(searchKeyWord == null ? '' : searchKeyWord)}" ><i class="fas fa-trash"></i></button>
                                     </td>
