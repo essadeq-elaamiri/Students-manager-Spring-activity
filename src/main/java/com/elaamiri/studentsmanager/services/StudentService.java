@@ -18,5 +18,7 @@ public interface StudentService {
 
     long getCountByGender(GENDER gender);
 
+    long getTotalNumberOfStudents();
+
     long getCountByIsInRule(boolean isInRule);
 }

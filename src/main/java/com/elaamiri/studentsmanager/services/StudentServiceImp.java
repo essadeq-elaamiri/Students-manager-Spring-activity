@@ -58,6 +58,10 @@ public class StudentServiceImp implements StudentService{
         return studentRepository.countByGender(gender);
     }
     @Override
+    public long getTotalNumberOfStudents(){
+        return studentRepository.count();
+    }
+    @Override
     public long getCountByIsInRule(boolean isInRule){
         return studentRepository.countByInRule(isInRule);
     }

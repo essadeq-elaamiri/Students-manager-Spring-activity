@@ -19,7 +19,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class StudentController {
     private final int MAXPAGES_INRANGE =  5;
-    StudentService studentService;
+    private StudentService studentService;
 
     //home and /
     @GetMapping("/home")
@@ -50,10 +50,12 @@ public class StudentController {
 
         // TODO: getting the number of males, females and inRules, and send them.
         // TODO: on click on the cards, should return the list.
+        long totalNumberOfStudents = studentService.getTotalNumberOfStudents();
         long numberOfMales  = studentService.getCountByGender(GENDER.MALE);
         long numberOfFemales = studentService.getCountByGender(GENDER.FEMALE);;
         long inRuleNumber = studentService.getCountByIsInRule(true);
 
+        model.addAttribute("totalNumberOfStudents", totalNumberOfStudents);
         model.addAttribute("numberOfMales", numberOfMales);
         model.addAttribute("numberOfFemales", numberOfFemales);
         model.addAttribute("inRuleNumber", inRuleNumber);
@@ -65,7 +67,7 @@ public class StudentController {
         model.addAttribute("pages10", pages10);
         // the attribute will be accessible from the view
 
-        return "/student/studentsList";
+        return "student/studentsList";
     }
 
     private int[] fillPagesArray(int currentPage, int numberOfPages){

@@ -80,7 +80,7 @@
                 <div class="col-md-3">
                     <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
                         <div>
-                            <h3 class="fs-2" th:text="${totalElements}">000</h3>
+                            <h3 class="fs-2" th:text="${totalNumberOfStudents}">000</h3>
                             <p class="fs-5">Students</p>
                         </div>
                         <i class="fas fa-users fs-1 primary-text  p-3"></i>
@@ -111,7 +111,7 @@
                 <div class="col-md-3">
                     <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
                         <div>
-                            <h3 class="fs-2" th:text="${'%'+(inRuleNumber*100)/ totalElements}">%000</h3> <h6></h6>
+                            <h3 class="fs-2" th:text="${'%'+((inRuleNumber*100)/ totalNumberOfStudents)}">%000</h3> <h6></h6>
                             <p class="fs-5"><span th:text="${inRuleNumber}"></span>In Rule</p>
 
                         </div>
