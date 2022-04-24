@@ -1,5 +1,6 @@
 package com.elaamiri.studentsmanager.services;
 
+import com.elaamiri.studentsmanager.entities.GENDER;
 import com.elaamiri.studentsmanager.entities.Student;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -15,4 +16,7 @@ public interface StudentService {
     Student updateStudent(long id, Student student);
 
 
+    long getCountByGender(GENDER gender);
+
+    long getCountByIsInRule(boolean isInRule);
 }

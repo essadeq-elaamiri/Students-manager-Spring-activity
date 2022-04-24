@@ -11,16 +11,17 @@
 </head>
 <body>
 <div class="container card pb-4 mb-5 " layout:fragment="mainFrag">
-    <h1 class="mt-4 mb-5 text-center">Add a new student</h1>
+    <h1 class="mt-4 mb-5 text-center">Edit student</h1>
     <div class="row">
         <div class="col-6 offset-3">
+            <span class="badge bg-dark text-light" th:text=" ${'ID: ' + studentObject.getId()}"></span>
             <form th:action="@{/admin/saveEditedStudent}" th:object="${studentObject}" method="POST" action="#">
-                <input type="text"
+                <input type="hidden"
                        name="id"
                        class="form-control"
                        id="id"
                        th:field="*{id}"
-                       th:value="${studentObject.id}" disabled>
+                       th:value="${studentObject.id}">
 
                 <div class="mb-3">
                     <label for="firstName" class="form-label">First name</label>

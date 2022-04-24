@@ -1,5 +1,6 @@
 package com.elaamiri.studentsmanager.services;
 
+import com.elaamiri.studentsmanager.entities.GENDER;
 import com.elaamiri.studentsmanager.entities.Student;
 import com.elaamiri.studentsmanager.repositories.StudentRepository;
 import lombok.AllArgsConstructor;
@@ -40,7 +41,7 @@ public class StudentServiceImp implements StudentService{
     public void deleteStudent(long id) {
         Optional<Student> student = getStudentById(id);
         if(student.isPresent())
-            studentRepository.deleteById(id);
+            studentRepository.delete(student.get());
         else
             throw new RuntimeException("Can not perform action, student does not exist!");
     }
@@ -51,5 +52,13 @@ public class StudentServiceImp implements StudentService{
         if(student1.isEmpty())
             throw new RuntimeException("Can not perform action, student does not exist!");
         return saveNewStudent(student);
+    }
+    @Override
+    public long getCountByGender(GENDER gender){
+        return studentRepository.countByGender(gender);
+    }
+    @Override
+    public long getCountByIsInRule(boolean isInRule){
+        return studentRepository.countByInRule(isInRule);
     }
 }

@@ -29,7 +29,7 @@
                         <a class="nav-link active" aria-current="page" th:href="@{/home}">Home</a>
                     </li>
 
-                    <li sec:authorize="hasAnyRole('USER')" class="nav-item">
+                    <li sec:authorize="hasAuthority('USER')" class="nav-item">
                         <a class="nav-link active" aria-current="page" th:href="@{/user/students}">Dashboard</a>
                     </li>
 

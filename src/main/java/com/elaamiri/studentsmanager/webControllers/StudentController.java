@@ -1,5 +1,6 @@
 package com.elaamiri.studentsmanager.webControllers;
 
+import com.elaamiri.studentsmanager.entities.GENDER;
 import com.elaamiri.studentsmanager.entities.Student;
 import com.elaamiri.studentsmanager.services.StudentService;
 import lombok.AllArgsConstructor;
@@ -48,7 +49,16 @@ public class StudentController {
         model.addAttribute("pages", new int[studentsPage.getTotalPages()]);
 
         // TODO: getting the number of males, females and inRules, and send them.
-        // on click on the cards, should return the list.
+        // TODO: on click on the cards, should return the list.
+        long numberOfMales  = studentService.getCountByGender(GENDER.MALE);
+        long numberOfFemales = studentService.getCountByGender(GENDER.FEMALE);;
+        long inRuleNumber = studentService.getCountByIsInRule(true);
+
+        model.addAttribute("numberOfMales", numberOfMales);
+        model.addAttribute("numberOfFemales", numberOfFemales);
+        model.addAttribute("inRuleNumber", inRuleNumber);
+
+
 
         int [] pages10 =  fillPagesArray(page, studentsPage.getTotalPages()); // currentPage
         // send an array of  10 elements (pages)
@@ -101,7 +111,7 @@ public class StudentController {
     public String
     saveNewStudent(@ModelAttribute("studentObject") @Valid Student student,
                    BindingResult bindingResult,
-                   @RequestParam(name = "gender")String gender,
+                   //@RequestParam(name = "gender")String gender,
                    @RequestParam(name = "page", defaultValue = "0") int page,
                    @RequestParam(name = "size", defaultValue = "5") int size,
                    @RequestParam(name = "searchKeyWord", defaultValue = "")
@@ -144,14 +154,15 @@ public class StudentController {
         return saveStudent(student, bindingResult,page, size, searchKeyWord, "student/editStudent");
     }
 
-    private String saveStudent(Student student, BindingResult bindingResult,int page,int size,String searchKeyWord, String ifErrorRedirectTo) {
+    private String saveStudent(Student student,
+                               BindingResult bindingResult,
+                               int page,
+                               int size,
+                               String searchKeyWord,
+                               String ifErrorRedirectTo) {
 
 
         if (bindingResult.hasErrors()) {
-            /*for (ObjectError err :bindingResult.getAllErrors()){
-                System.out.println(err);
-
-            }*/
             return ifErrorRedirectTo; // redirect to form to show errors
         } else {
             studentService.saveNewStudent(student);
@@ -160,26 +171,18 @@ public class StudentController {
             return "redirect:/user/students?page=" + page + "&size=" + size + "&searchKeyWord=" + searchKeyWord;
         }
 
-        /*
-        studentService.saveNewStudent(student);
-        // send a success message
-        //model.addAttribute("StudentSuccessInsertionMsg", "Student inserted successfully");
-        return "redirect:/user/students?page=" + page + "&size=" + size + "&searchKeyWord=" + searchKeyWord;
-
-         */
     }
 
 
-    @DeleteMapping("/admin/deleteStudent/{id}")
-    public String deleteStudent(@PathVariable(value = "id")Long id,
+    @DeleteMapping("/admin/deleteStudent/{id}")///admin/deleteStudent/510
+    //@GetMapping("/admin/deleteStudent/{id}")
+    public String deleteStudent(@PathVariable("id")Long id,
                                 @RequestParam(name = "page", defaultValue = "0") int page,
                                 @RequestParam(name = "size", defaultValue = "5") int size,
                                 @RequestParam(name = "searchKeyWord", defaultValue = "") String searchKeyWord){
         //System.out.println(currentPage);
         studentService.deleteStudent(id);
-        // TODO: delete
-        //System.out.println("from delete: "+ searchKeyWord);
-        //System.out.println("from delete null?: "+ (searchKeyWord == null));
+        System.out.println("from delete: "+ id);
         return "redirect:/user/students?page="+page+"&size="+size+"&searchKeyWord="+(searchKeyWord == null ? "" : searchKeyWord);
     }
 

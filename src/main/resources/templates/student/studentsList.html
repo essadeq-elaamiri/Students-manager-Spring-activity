@@ -26,7 +26,9 @@
 
         </div>
         <div class="list-group list-group-flush my-3">
-            <a href="@{/user/students}" class="list-group-item list-group-item-action bg-transparent second-text active"><i
+            <a th:href="@{/}" class="list-group-item list-group-item-action bg-transparent second-text active"><i
+                    class="fas fa-home me-2"></i>Home</a>
+            <a th:href="@{/user/students}" class="list-group-item list-group-item-action bg-transparent second-text active"><i
                     class="fas fa-user-graduate me-2"></i>Students</a>
             <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
                 <i class="fas  fa-chalkboard-teacher me-2"></i>Teachers</a>
@@ -78,7 +80,7 @@
                 <div class="col-md-3">
                     <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
                         <div>
-                            <h3 class="fs-2">720</h3>
+                            <h3 class="fs-2" th:text="${totalElements}">000</h3>
                             <p class="fs-5">Students</p>
                         </div>
                         <i class="fas fa-users fs-1 primary-text  p-3"></i>
@@ -88,7 +90,7 @@
                 <div class="col-md-3">
                     <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
                         <div>
-                            <h3 class="fs-2">400</h3>
+                            <h3 class="fs-2" th:text="${numberOfMales}">000</h3>
                             <p class="fs-5">Males</p>
                         </div>
                         <i class="fas fa-male fs-1 primary-text   p-3"></i>
@@ -99,7 +101,7 @@
                 <div class="col-md-3">
                     <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
                         <div>
-                            <h3 class="fs-2">3899</h3>
+                            <h3 class="fs-2" th:text="${numberOfFemales}">0000</h3>
                             <p class="fs-5">Females</p>
                         </div>
                         <i class="fas fa-female fs-1 primary-text   p-3"></i>
@@ -109,8 +111,9 @@
                 <div class="col-md-3">
                     <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
                         <div>
-                            <h3 class="fs-2">%25</h3>
-                            <p class="fs-5">InRule</p>
+                            <h3 class="fs-2" th:text="${'%'+(inRuleNumber*100)/ totalElements}">%000</h3> <h6></h6>
+                            <p class="fs-5"><span th:text="${inRuleNumber}"></span>In Rule</p>
+
                         </div>
                         <i class="fas fa-user-tag fs-1 primary-text   p-3"></i>
                     </div>
@@ -132,7 +135,7 @@
             </div>
 
             <div class="row my-3">
-                <a th:href="@{/admin/showAddStudent}" sec:authorize="hasAnyRole('ADMIN')" class="btn btn-primary btn-sm text-uppercase my-2">add new student</a>
+                <a th:href="@{/admin/showAddStudent}" sec:authorize="hasAuthority('ADMIN')" class="btn btn-primary btn-sm text-uppercase my-2">add new student</a>
 
                 </div>
 
@@ -167,7 +170,7 @@
                                         </a>
                                     </li>
                                     <li class="page-item">
-                                        <a class="page-link" th:href="@{/user/students(page=${#lists.size(pages)-1}, searchKeyWord=${searchKeyWord})}" aria-label="Next">
+                                        <a class="page-link" th:href="@{/user/students(page=${totalPages - 1}, searchKeyWord=${searchKeyWord})}" aria-label="Next">
                                             <span aria-hidden="true">&raquo;</span>
                                         </a>
                                     </li>
@@ -188,7 +191,7 @@
                                     <th scope="col">Birth</th>
                                     <th scope="col">Gender</th>
                                     <th scope="col">InRule?</th>
-                                    <th sec:authorize="hasAnyRole('ADMIN')" scope="col">Actions</th>
+                                    <th sec:authorize="hasAuthority('ADMIN')" scope="col">Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -200,7 +203,7 @@
                                     <td th:text="${student.getBirth()}"></td>
                                     <td th:text="${student.getGender()}"></td>
                                     <td th:text="${student.isInRule()? 'Yes' : 'No'}"></td>
-                                    <td sec:authorize="hasAnyRole('ADMIN')">
+                                    <td sec:authorize="hasAuthority('ADMIN')">
                                         <a th:href="@{/admin/showEditStudent/{id}(id=${student.getId()},page= ${currentPage}, searchKeyWord=${searchKeyWord})}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
                                         <button  class="btn btn-sm btn-danger deleteStudentBtn" th:attr="data-deleteLink = ${'/admin/deleteStudent/'+student.getId()+'?page='+currentPage+'&searchKeyWord='+(searchKeyWord == null ? '' : searchKeyWord)}" ><i class="fas fa-trash"></i></button>
                                     </td>
